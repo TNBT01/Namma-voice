@@ -21,13 +21,15 @@ build/
 Thumbs.db
 
 
-# Private application data
-database/*.sqlite
-database/*.sqlite3
-database/*.db
+# Private databases and validation artifacts
+*.sqlite
+*.sqlite3
+*.db
 
-# User-uploaded files
+# Validation and test artifacts
+.validation-run/
+.validation-live/
+
+# Uploaded files and backups
 uploads/
-
-# Database backups
 backups/
