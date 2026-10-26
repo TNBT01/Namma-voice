@@ -19,3 +19,15 @@ build/
 # Operating system files
 .DS_Store
 Thumbs.db
+
+
+# Private application data
+database/*.sqlite
+database/*.sqlite3
+database/*.db
+
+# User-uploaded files
+uploads/
+
+# Database backups
+backups/
