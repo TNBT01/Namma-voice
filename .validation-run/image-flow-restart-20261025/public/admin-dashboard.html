@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | NAMMA VOICE</title>
+  <meta name="description" content="Private administrative dashboard for the NAMMA VOICE campus issue-management platform.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="__CANONICAL_URL__">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <meta property="og:title" content="Admin Dashboard | NAMMA VOICE">
+  <meta property="og:description" content="Private administrative dashboard for the NAMMA VOICE campus issue-management platform.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="__CANONICAL_URL__">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/student.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <!-- Chart.js CDN for lightweight, high-performance college analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-top-bar">
+      <div class="header-top-inner">
+        <div>APS COLLEGE OF ARTS AND SCIENCE • BANGALORE • ESTD. 1956</div>
+        <div>Affiliated with Bengaluru City University</div>
+      </div>
+    </div>
+
+    <div class="header-main-inner">
+      <a href="/index.html" class="brand-section">
+        <span class="brand-mark" aria-hidden="true">NV</span>
+        <div class="brand-titles">
+          <span class="brand-title">NAMMA VOICE</span>
+          <span class="brand-subtitle">Student Grievance &amp; Academic Portal</span>
+        </div>
+      </a>
+      <div class="college-name-lockup" aria-label="APS College of Arts and Science">APS COLLEGE<br><span>ARTS &amp; SCIENCE</span></div>
+
+      <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Tab Navigation Bar -->
+    <div class="nav-tab-bar">
+      <div class="nav-tab-inner">
+        <nav class="nav-links" id="main-nav-links"></nav>
+        <div class="nav-auth-actions" id="nav-auth-actions"></div>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu"><div id="mobile-nav-links"></div></div>
+  </header>
+
+  <main class="container">
+    <div id="admin-dash-alert"></div>
+
+    <div class="dashboard-welcome">
+      <div>
+        <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent); text-transform: uppercase;">
+          APS College Administration Portal
+        </div>
+        <h1 class="welcome-title">Campus Redressal Analytics</h1>
+        <p class="welcome-subtitle">
+          Real-time oversight of student grievances, facility repairs, and departmental resolution efficiency.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <a href="/complaint-management.html" class="btn btn-primary">
+          <span>🛠️</span> Manage Complaints
+        </a>
+        <a href="/resources.html" class="btn btn-secondary">
+          <span>📤</span> Upload Papers
+        </a>
+      </div>
+    </div>
+
+    <!-- Live complaint summary cards -->
+    <div class="metrics-grid admin-summary-grid">
+      <div class="metric-card total">
+        <div>
+          <div class="metric-value" id="metric-total">0</div>
+          <div class="metric-label">Total Complaints</div>
+        </div>
+        <div class="metric-icon">📊</div>
+      </div>
+
+      <div class="metric-card pending">
+        <div>
+          <div class="metric-value" id="metric-pending" style="color: var(--accent-amber);">0</div>
+          <div class="metric-label">Pending</div>
+        </div>
+        <div class="metric-icon">⏳</div>
+      </div>
+
+      <div class="metric-card progress">
+        <div>
+          <div class="metric-value" id="metric-progress" style="color: var(--accent);">0</div>
+          <div class="metric-label">In Progress</div>
+        </div>
+        <div class="metric-icon">🔧</div>
+      </div>
+
+      <div class="metric-card resolved">
+        <div>
+          <div class="metric-value" id="metric-resolved" style="color: var(--accent-green);">0</div>
+          <div class="metric-label">Resolved</div>
+        </div>
+        <div class="metric-icon">✅</div>
+      </div>
+
+
+    </div>
+
+    <!-- Analytics Charts (Chart.js) -->
+    <div class="charts-grid">
+      <!-- Chart 1: By Category -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3 class="chart-title">Complaints by Facility Category</h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Real SQLite Data</span>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chart-category"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 2: By Status -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3 class="chart-title">Resolution Status Breakdown</h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Current Workflow</span>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="chart-status"></canvas>
+        </div>
+      </div>
+
+      <!-- Chart 3: Monthly Trends (Full Width) -->
+      <div class="chart-card chart-card-full">
+        <div class="chart-header">
+          <h3 class="chart-title">Monthly Grievance Filing Trends</h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Last 6 Months Activity</span>
+        </div>
+        <div class="chart-canvas-wrap" style="height: 220px;">
+          <canvas id="chart-trend"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Complaints Table -->
+    <div class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--primary);">
+          Recent Complaints
+        </h2>
+        <a href="/complaint-management.html" class="btn btn-outline-sm">Open Complaint Management Console →</a>
+      </div>
+
+      <div class="empty-state" id="recent-complaints-empty" role="status" hidden>
+        <div class="empty-state-title">No complaints have been submitted yet.</div>
+        <p class="empty-state-text">New complaints will appear here.</p>
+      </div>
+      <div class="table-responsive" id="recent-complaints-table">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Assigned Department</th>
+              <th>Status</th>
+              <th>Date Filed</th>
+              <th>Attachment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="recent-tbody">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Academic Resource Repository Management Section -->
+    <div class="card" style="margin-top: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--college-navy); text-transform: uppercase;">
+            Curriculum Documents: BCA • B.Sc • B.A
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--college-navy);">
+            Academic Resources &amp; Question Papers
+          </h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button type="button" class="btn btn-primary-sm" id="btn-admin-dash-upload">
+            <span>📤</span> Upload Resource Document
+          </button>
+          <a href="/resources.html" class="btn btn-outline-sm">
+            View Public Repository →
+          </a>
+        </div>
+      </div>
+
+      <!-- Resource Metrics Sub-grid -->
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+        <div style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid var(--college-navy);">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">Total Uploaded</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: var(--college-navy);" id="res-metric-total">0</div>
+        </div>
+        <div style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid #2563eb;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">BCA Question Papers</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #2563eb;" id="res-metric-bca">0</div>
+        </div>
+        <div style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid #059669;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">B.Sc Question Papers</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #059669;" id="res-metric-bsc">0</div>
+        </div>
+        <div style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-sm); border-left: 3px solid #d97706;">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">B.A Question Papers</div>
+          <div style="font-size: 1.5rem; font-weight: 800; color: #d97706;" id="res-metric-ba">0</div>
+        </div>
+      </div>
+
+      <!-- Recent Uploaded Resources Table -->
+      <h3 style="font-size: 1rem; font-weight: 700; color: var(--college-navy); margin-bottom: 0.75rem;">
+        Recently Uploaded Papers
+      </h3>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Resource ID</th>
+              <th>Document Title</th>
+              <th>Course</th>
+              <th>Subject</th>
+              <th>Semester</th>
+              <th>File Name</th>
+              <th>Date Added</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="admin-recent-resources-tbody">
+            <!-- Populated via admin-dashboard.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Student Account Administration & Access Control -->
+    <div class="card" style="margin-top: 2rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--primary);">
+            👥 Registered Student Accounts &amp; Access Control
+          </h2>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.25rem 0 0;">
+            Verify student college registration numbers, enrollment records, and active credentials.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <input type="text" id="admin-student-search" placeholder="Search by name, reg no, email..." class="form-control" style="width: 260px; padding: 0.45rem 0.75rem; font-size: 0.85rem;">
+          <button type="button" id="btn-refresh-students" class="btn btn-outline-sm">↻ Refresh</button>
+        </div>
+      </div>
+
+      <div id="student-mgmt-alert"></div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>College Reg No</th>
+              <th>Student Name</th>
+              <th>College Email</th>
+              <th>Course</th>
+              <th>Semester</th>
+              <th>Status</th>
+              <th>Enrolled On</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="admin-students-tbody">
+            <!-- Populated via admin-dashboard.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Live SQLite Database Inspector -->
+    <div class="card" style="margin-top: 2rem; border-top: 4px solid var(--accent);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase;">
+            Aggregate storage counts
+          </div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--primary);">
+            🗄️ Live SQLite Database Inspector
+          </h2>
+        </div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;" id="db-table-tabs">
+          <button type="button" class="quick-stat-btn active" data-table="complaints">complaints</button>
+          <button type="button" class="quick-stat-btn" data-table="students">students</button>
+          <button type="button" class="quick-stat-btn" data-table="admins">admins</button>
+          <button type="button" class="quick-stat-btn" data-table="complaint_history">complaint_history</button>
+          <button type="button" class="quick-stat-btn" data-table="resources">resources</button>
+          <button type="button" class="quick-stat-btn" data-table="audit_logs">audit_logs</button>
+          <button type="button" class="quick-stat-btn" data-table="password_resets">password_resets</button>
+        </div>
+      </div>
+
+      <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+        <table class="data-table" id="db-inspector-table">
+          <thead id="db-inspector-thead"></thead>
+          <tbody id="db-inspector-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Admin Upload Resource Modal (Backend resource creation) -->
+  <div class="modal-overlay" id="admin-upload-resource-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Upload Academic Document (Admin)</h3>
+        <button type="button" class="modal-close-btn" id="btn-close-admin-res-modal">&times;</button>
+      </div>
+
+      <div id="admin-res-modal-alert"></div>
+
+      <form id="admin-upload-resource-form">
+        <div class="form-group">
+          <label class="form-label required">Paper / Resource Title</label>
+          <input type="text" name="title" class="form-control" placeholder="e.g. Operating Systems - Model Paper 2026" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label required">Subject</label>
+          <input type="text" name="subject" class="form-control" placeholder="e.g. Operating Systems / Electronics / History" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label required">Applicable Course</label>
+            <select name="department" class="form-control form-select" required>
+              <option value="BCA">BCA (Bachelor of Computer Applications)</option>
+              <option value="B.Sc">B.Sc (Bachelor of Science)</option>
+              <option value="B.A">B.A (Bachelor of Arts)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label required">Semester</label>
+            <select name="semester" class="form-control form-select" required>
+              <option value="Semester 1">Semester 1</option>
+              <option value="Semester 2">Semester 2</option>
+              <option value="Semester 3">Semester 3</option>
+              <option value="Semester 4">Semester 4</option>
+              <option value="Semester 5">Semester 5</option>
+              <option value="Semester 6" selected>Semester 6</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label required">Academic Year</label>
+            <input type="text" name="academic_year" class="form-control" value="2025-2026" placeholder="2025-2026" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label required">PDF Document File</label>
+            <input type="file" name="file" class="form-control" accept=".pdf,application/pdf" required>
+            <small style="color: var(--text-muted); font-size: 0.75rem;">Only authentic PDF documents accepted (max 10MB)</small>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-admin-res-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Upload to Repository</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dedicated Bottom Academic Credits & Footer -->
+        <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-block">
+        <div class="footer-brand-title">NAMMA VOICE</div>
+        <div class="footer-slogan">Namma College. Namma Voice.</div>
+        <div class="footer-college">APS College of Arts and Science</div>
+        <p class="footer-desc">A student-focused platform for campus feedback, issue reporting, resolution tracking, and college resources.</p>
+      </div>
+      <div>
+        <h2 class="footer-heading">Explore</h2>
+        <ul class="footer-links"><li><a href="/index.html#features">Features</a></li><li><a href="/about.html">About NAMMA VOICE</a></li><li><a href="/resources.html">College Resources</a></li><li><a href="/courses.html">Courses</a></li></ul>
+      </div>
+      <div>
+        <h2 class="footer-heading">Portals</h2>
+        <ul class="footer-links"><li><a href="/student-login.html">Student Login</a></li><li><a href="/student-register.html">Register</a></li><li><a href="/admin-login.html">Admin Login</a></li><li><a href="/student-info.html">Student Guide</a></li></ul>
+      </div>
+    </div>
+    <section class="footer-credits-section" aria-labelledby="credits-title">
+      <h2 id="credits-title" class="credits-title">Faculty Acknowledgements &amp; Project Credits</h2>
+      <div class="credits-grid-row">
+        <div class="credit-item"><span class="credit-role">Faculty</span><span class="credit-name">Associate Professor Manjunath</span><span class="credit-dept">BCA / Computer Science faculty</span></div>
+        <div class="credit-item"><span class="credit-role">Department Head</span><span class="credit-name">Dr. Satyashree</span><span class="credit-dept">Head of the Computer Science Department</span></div>
+        <div class="credit-item"><span class="credit-role">Developer / Project Contributor</span><span class="credit-name">Sathya Prakash</span></div>
+        <div class="credit-item"><span class="credit-role">Project Contributor</span><span class="credit-name">Kausar Bee S</span></div>
+      </div>
+    </section>
+    <div class="footer-bottom"><div>Copyright <span id="footer-year">2026</span> NAMMA VOICE | APS College of Arts and Science</div><a href="/about.html">About the platform</a></div>
+  </footer>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/navigation.js"></script>
+  <script src="/js/admin-dashboard.js"></script>
+</body>
+</html>

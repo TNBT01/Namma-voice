@@ -1,0 +1,6 @@
+{
+  "name": "NAMMA VOICE - APS College of Arts and Science",
+  "description": "Student-led campus improvement platform for APS College of Arts and Science. Raise concerns, track complaints, and access academic question papers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

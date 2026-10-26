@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaint Management | NAMMA VOICE Admin</title>
+  <meta name="description" content="Private administrator interface for reviewing, assigning, and resolving anonymous campus complaints.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="__CANONICAL_URL__">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <meta property="og:title" content="Complaint Management | NAMMA VOICE Admin">
+  <meta property="og:description" content="Private administrator interface for reviewing, assigning, and resolving anonymous campus complaints.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="__CANONICAL_URL__">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/student.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-top-bar">
+      <div class="header-top-inner">
+        <div>APS COLLEGE OF ARTS AND SCIENCE • BANGALORE • ESTD. 1956</div>
+        <div>Affiliated with Bengaluru City University</div>
+      </div>
+    </div>
+
+    <div class="header-main-inner">
+      <a href="/index.html" class="brand-section">
+        <span class="brand-mark" aria-hidden="true">NV</span>
+        <div class="brand-titles">
+          <span class="brand-title">NAMMA VOICE</span>
+          <span class="brand-subtitle">Student Grievance &amp; Academic Portal</span>
+        </div>
+      </a>
+      <div class="college-name-lockup" aria-label="APS College of Arts and Science">APS COLLEGE<br><span>ARTS &amp; SCIENCE</span></div>
+
+      <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Tab Navigation Bar -->
+    <div class="nav-tab-bar">
+      <div class="nav-tab-inner">
+        <nav class="nav-links" id="main-nav-links"></nav>
+        <div class="nav-auth-actions" id="nav-auth-actions"></div>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu"><div id="mobile-nav-links"></div></div>
+  </header>
+
+  <main class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+      <div>
+        <h1 style="font-size: 1.85rem; font-weight: 800; color: var(--primary);">Complaint Administration</h1>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;">Review campus issues, assign a department, and update resolution progress. Student account details are kept private.</p>
+      </div>
+      <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent);" id="results-count" role="status" aria-live="polite">
+        Loading complaints...
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="search-input-wrap">
+        <label class="sr-only" for="search-complaints">Search complaints by ID or title</label>
+        <input type="search" id="search-complaints" class="form-control" placeholder="Search by complaint ID or title" autocomplete="off">
+      </div>
+
+      <div class="filter-select">
+        <label class="sr-only" for="filter-category">Filter by category</label>
+        <select id="filter-category" class="form-control form-select">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+
+      <div class="filter-select">
+        <label class="sr-only" for="filter-dept">Filter by department</label>
+        <select id="filter-dept" class="form-control form-select">
+          <option value="">All Departments</option>
+        </select>
+      </div>
+
+      <div class="filter-select">
+        <label class="sr-only" for="filter-status">Filter by status</label>
+        <select id="filter-status" class="form-control form-select">
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+      </div>
+
+      <div class="filter-select">
+        <label class="sr-only" for="filter-sort">Sort complaints</label>
+        <select id="filter-sort" class="form-control form-select">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+        </select>
+      </div>
+
+      <button type="button" id="btn-reset" class="btn btn-secondary-sm">
+        Reset
+      </button>
+    </div>
+
+    <!-- Complaints Management Table -->
+    <div id="complaints-alert"></div>
+    <div class="card complaint-table-card" style="padding: 0; overflow: hidden;">
+      <div class="empty-state" id="complaints-empty-state" role="status" hidden>
+        <div class="empty-state-title">No complaints have been submitted yet.</div>
+        <p class="empty-state-text">New complaints will appear here.</p>
+      </div>
+      <div id="complaints-table-wrap" class="table-responsive" style="border: none;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Complaint ID</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Department</th>
+              <th>Date Submitted</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="complaints-tbody">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+      <nav id="complaint-pagination" class="complaint-pagination" aria-label="Complaint pages" hidden>
+        <button type="button" id="complaints-prev" class="btn btn-secondary-sm">Previous</button>
+        <span id="complaints-page-status" aria-live="polite"></span>
+        <button type="button" id="complaints-next" class="btn btn-secondary-sm">Next</button>
+      </nav>
+    </div>
+  </main>
+
+  <!-- Footer -->
+    <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-block">
+        <div class="footer-brand-title">NAMMA VOICE</div>
+        <div class="footer-slogan">Namma College. Namma Voice.</div>
+        <div class="footer-college">APS College of Arts and Science</div>
+        <p class="footer-desc">A student-focused platform for campus feedback, issue reporting, resolution tracking, and college resources.</p>
+      </div>
+      <div>
+        <h2 class="footer-heading">Explore</h2>
+        <ul class="footer-links"><li><a href="/index.html#features">Features</a></li><li><a href="/about.html">About NAMMA VOICE</a></li><li><a href="/resources.html">College Resources</a></li><li><a href="/courses.html">Courses</a></li></ul>
+      </div>
+      <div>
+        <h2 class="footer-heading">Portals</h2>
+        <ul class="footer-links"><li><a href="/student-login.html">Student Login</a></li><li><a href="/student-register.html">Register</a></li><li><a href="/admin-login.html">Admin Login</a></li><li><a href="/student-info.html">Student Guide</a></li></ul>
+      </div>
+    </div>
+    <section class="footer-credits-section" aria-labelledby="credits-title">
+      <h2 id="credits-title" class="credits-title">Faculty Acknowledgements &amp; Project Credits</h2>
+      <div class="credits-grid-row">
+        <div class="credit-item"><span class="credit-role">Faculty</span><span class="credit-name">Associate Professor Manjunath</span><span class="credit-dept">BCA / Computer Science faculty</span></div>
+        <div class="credit-item"><span class="credit-role">Department Head</span><span class="credit-name">Dr. Satyashree</span><span class="credit-dept">Head of the Computer Science Department</span></div>
+        <div class="credit-item"><span class="credit-role">Developer / Project Contributor</span><span class="credit-name">Sathya Prakash</span></div>
+        <div class="credit-item"><span class="credit-role">Project Contributor</span><span class="credit-name">Kausar Bee S</span></div>
+      </div>
+    </section>
+    <div class="footer-bottom"><div>Copyright <span id="footer-year">2026</span> NAMMA VOICE | APS College of Arts and Science</div><a href="/about.html">About the platform</a></div>
+  </footer>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/navigation.js"></script>
+  <script src="/js/complaint-management.js"></script>
+</body>
+</html>

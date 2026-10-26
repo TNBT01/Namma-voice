@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Campus Feedback | NAMMA VOICE</title>
+  <meta name="description" content="Private form for submitting feedback and reporting a campus issue to APS College of Arts and Science.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="__CANONICAL_URL__">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <meta property="og:title" content="Submit Campus Feedback | NAMMA VOICE">
+  <meta property="og:description" content="Private form for submitting feedback and reporting a campus issue to APS College of Arts and Science.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="__CANONICAL_URL__">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/student.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-top-bar">
+      <div class="header-top-inner">
+        <div>APS COLLEGE OF ARTS AND SCIENCE • BANGALORE • ESTD. 1956</div>
+        <div>Affiliated with Bengaluru City University</div>
+      </div>
+    </div>
+
+    <div class="header-main-inner">
+      <a href="/index.html" class="brand-section">
+        <span class="brand-mark" aria-hidden="true">NV</span>
+        <div class="brand-titles">
+          <span class="brand-title">NAMMA VOICE</span>
+          <span class="brand-subtitle">Student Grievance &amp; Academic Portal</span>
+        </div>
+      </a>
+      <div class="college-name-lockup" aria-label="APS College of Arts and Science">APS COLLEGE<br><span>ARTS &amp; SCIENCE</span></div>
+
+      <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Tab Navigation Bar -->
+    <div class="nav-tab-bar">
+      <div class="nav-tab-inner">
+        <nav class="nav-links" id="main-nav-links"></nav>
+        <div class="nav-auth-actions" id="nav-auth-actions"></div>
+      </div>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu"><div id="mobile-nav-links"></div></div>
+  </header>
+
+  <main class="container" style="max-width: 820px;">
+    <!-- Form Card -->
+    <div class="card" id="form-card">
+      <div style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+        <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent); text-transform: uppercase;">
+          Campus Redressal Portal
+        </div>
+        <h1 style="font-size: 1.75rem; font-weight: 800; color: var(--primary); margin-top: 0.25rem;">
+          Report a Campus Concern
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 0.925rem; margin-top: 0.25rem;">
+          Please provide accurate details so the administrative team can dispatch maintenance or relevant faculty swiftly.
+        </p>
+      </div>
+
+      <div id="submit-alert"></div>
+
+      <form id="submit-complaint-form">
+        <div class="form-group">
+          <label for="complaint-title" class="form-label required">Complaint Title</label>
+          <input type="text" id="complaint-title" name="title" class="form-control" placeholder="e.g. Broken ceiling fan in Room 304 / Lab 2 projector not working" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="complaint-category" class="form-label required">Facility Category</label>
+            <select id="complaint-category" name="category" class="form-control form-select" required>
+              <option value="" disabled selected>Loading categories...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="complaint-location" class="form-label required">Campus Location</label>
+            <input type="text" id="complaint-location" name="location" class="form-control" placeholder="e.g. Arts Block Room 304, 3rd Floor" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="complaint-description" class="form-label required">Detailed Problem Description</label>
+          <textarea id="complaint-description" name="description" class="form-control" rows="4" placeholder="Explain the exact issue, how long it has been occurring, and its impact on lectures or campus activities..." aria-describedby="complaint-privacy-note" required></textarea>
+          <span class="form-hint" id="complaint-privacy-note">Your account details are withheld from complaint administrators. Avoid adding your name, registration number, phone, or email to the description or photo, since submitted content can identify you.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="complaint-attachment" class="form-label">Optional Photo Evidence</label>
+          <input type="file" id="complaint-attachment" name="attachment" class="form-control" accept="image/jpeg,image/png,image/webp">
+          <span class="form-hint">Accepted formats: JPEG, PNG, WebP (Max 5MB). Photo evidence helps expedite physical repairs.</span>
+        </div>
+
+        <!-- Image Preview Container -->
+        <div id="image-preview-wrap" class="attachment-preview" style="display: none;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.5rem;">Attachment Preview:</div>
+          <img id="image-preview" src="" alt="Selected attachment preview" class="attachment-img">
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <button type="submit" class="btn btn-primary" style="flex: 2;">
+            Submit Complaint
+          </button>
+          <a href="/student-dashboard.html" class="btn btn-secondary" style="flex: 1;">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success Confirmation Card -->
+    <div class="card" id="success-card" style="display: none; text-align: center; padding: 3rem 2rem;">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: #dcfce7; color: #16a34a; font-size: 2rem; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+        ✓
+      </div>
+      <h2 style="font-size: 1.75rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">
+        Complaint Submitted Successfully
+      </h2>
+      <div style="font-size: 1.1rem; color: var(--accent); font-weight: 700; margin-bottom: 0.75rem;">
+        Complaint ID: <span id="success-complaint-id">NV-2026-000</span>
+      </div>
+      <p style="color: var(--text-secondary); max-width: 460px; margin: 0 auto 2rem auto;">
+        "Your complaint has been registered. You can track its progress from My Complaints." The administration has received your report.
+      </p>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a id="btn-view-submitted" href="/my-complaints.html" class="btn btn-primary">
+          View Complaint Progress
+        </a>
+        <a href="/student-dashboard.html" class="btn btn-secondary">
+          Return to Dashboard
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+    <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand-block">
+        <div class="footer-brand-title">NAMMA VOICE</div>
+        <div class="footer-slogan">Namma College. Namma Voice.</div>
+        <div class="footer-college">APS College of Arts and Science</div>
+        <p class="footer-desc">A student-focused platform for campus feedback, issue reporting, resolution tracking, and college resources.</p>
+      </div>
+      <div>
+        <h2 class="footer-heading">Explore</h2>
+        <ul class="footer-links"><li><a href="/index.html#features">Features</a></li><li><a href="/about.html">About NAMMA VOICE</a></li><li><a href="/resources.html">College Resources</a></li><li><a href="/courses.html">Courses</a></li></ul>
+      </div>
+      <div>
+        <h2 class="footer-heading">Portals</h2>
+        <ul class="footer-links"><li><a href="/student-login.html">Student Login</a></li><li><a href="/student-register.html">Register</a></li><li><a href="/admin-login.html">Admin Login</a></li><li><a href="/student-info.html">Student Guide</a></li></ul>
+      </div>
+    </div>
+    <section class="footer-credits-section" aria-labelledby="credits-title">
+      <h2 id="credits-title" class="credits-title">Faculty Acknowledgements &amp; Project Credits</h2>
+      <div class="credits-grid-row">
+        <div class="credit-item"><span class="credit-role">Faculty</span><span class="credit-name">Associate Professor Manjunath</span><span class="credit-dept">BCA / Computer Science faculty</span></div>
+        <div class="credit-item"><span class="credit-role">Department Head</span><span class="credit-name">Dr. Satyashree</span><span class="credit-dept">Head of the Computer Science Department</span></div>
+        <div class="credit-item"><span class="credit-role">Developer / Project Contributor</span><span class="credit-name">Sathya Prakash</span></div>
+        <div class="credit-item"><span class="credit-role">Project Contributor</span><span class="credit-name">Kausar Bee S</span></div>
+      </div>
+    </section>
+    <div class="footer-bottom"><div>Copyright <span id="footer-year">2026</span> NAMMA VOICE | APS College of Arts and Science</div><a href="/about.html">About the platform</a></div>
+  </footer>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/navigation.js"></script>
+  <script src="/js/submit-complaint.js"></script>
+</body>
+</html>

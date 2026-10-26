@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="NAMMA VOICE">
+  <rect width="64" height="64" rx="14" fill="#142b40"/>
+  <path d="M16 46V18h7l18 18V18h7v28h-7L23 28v18z" fill="#f8f5ed"/>
+  <circle cx="51" cy="49" r="4" fill="#c5a46b"/>
+</svg>
